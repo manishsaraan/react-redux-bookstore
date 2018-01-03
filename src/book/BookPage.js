@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as bookActions from '../actions/bookActions';
 
 class Book extends React.Component{
   constructor(props){
@@ -8,9 +10,11 @@ class Book extends React.Component{
 
   // Submit book handler
   submitBook(input){
-    alert('Submitted')
+    this.props.createBook(input);
   }
-
+  componentDidMount(){
+    this.props.getBooks();
+  }
   render(){
     // Title input tracker
     let titleInput;
@@ -42,5 +46,18 @@ class Book extends React.Component{
     )
   }
 }
+//map state from store to props
+const mapStateToProps = (state, ownProps) => {
+  return {
+    books : state.books
+  }
+};
 
-export default Book;
+//Map actions to props
+const mapDispatchToProps = dispatch => {
+  return {
+    createBook : book => dispatch(bookActions.createBook(book)),
+    getBooks : () => dispatch(bookActions.getBooks()),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Book);

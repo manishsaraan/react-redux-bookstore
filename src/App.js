@@ -18,8 +18,7 @@ const App = (props) => {
             </ul>
           </div>
         </div>
-      </nav>
-      {/* Each smaller components */}
+      </nav>      
       {props.children}
     </div>
   );
